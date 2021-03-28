@@ -50,6 +50,25 @@ public class APITest {
             ;
     }
 
+    @Test
+    public void deveRemoverTarefa() {
+        // inserir
+        Integer id = RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body("{\"task\":\"tarefa de exclusao\",\"dueDate\":\"2021-11-10\"}")
+            .when()
+                .post("/todo")
+            .then()
+                .statusCode(201)
+                .extract().path("id")
+        ;
 
-
+        // remover
+        RestAssured.given()
+            .when()
+                .delete("/todo/" + id)
+            .then()
+                .statusCode(204)
+        ;
+    }
 }
